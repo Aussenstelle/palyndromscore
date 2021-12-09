@@ -1,5 +1,8 @@
 import time
 from tkinter import *
+import psutil
+import matplotlib.pyplot as plt
+import numpy as np
 
 def palindrom():
     Button1.destroy()
@@ -7,8 +10,9 @@ def palindrom():
     Fehler = []
     e = time.time()
     liste = []
-
-    for x in range(100):
+    auslastung = []
+    zeitliste = []
+    for x in range(1000):
         Zahl = rootZahl
         versuche = 0
         label.config(text='Zahl wird berechnet: '+str(rootZahl))
@@ -34,6 +38,10 @@ def palindrom():
                 break
             Zahl = Zahl + int(str(Zahl)[::-1])
             label3.config(text='Hochgerechnete Zahl: '+str(Zahl)[:70])
+            label5.config(text='Größe der berechneten Zahl: '+str(len(str(Zahl))))
+            print('Auslastung: '+str(psutil.cpu_percent()))
+            auslastung.append(psutil.cpu_percent())
+            zeitliste.append(str(float(time.time())-float(e)))
             tk.update()
 
         temp.append(rootZahl)
@@ -51,11 +59,16 @@ def palindrom():
     scrollbar.pack(side = RIGHT, fill = BOTH)
     listbox.insert(END, 'Zahl      Versuche')
     # Insert elements into the listbox
-    for values in range(100):
-        values = str(rootZahl) + ': ' + str(versuche)
-        listbox.insert(END, values)
+    for values in range(len(liste)):
+        temp = str(liste[values][0]) + ': ' + str(liste[values][1])
+        listbox.insert(END, temp)
     listbox.config(yscrollcommand = scrollbar.set)
     scrollbar.config(command = listbox.yview)
+    xpoints = np.array(zeitliste)
+    ypoints = np.array(auslastung)
+    plt.plot(xpoints, ypoints)
+    plt.show()
+
 
 
 tk = Tk()
@@ -68,7 +81,10 @@ label3 = Label(tk, text=str('Hochgerechnete Zahl: None'), font=('Arial', 20))
 label3.place(x=10, y=250)
 label4 = Label(tk, text=str('Timeout bei: None'))
 label4.place(x=10, y=350)
-
+label5 = Label(tk, text=str('Größe der berechneten Zahl: None'), font=('Arial', 20))
+label5.place(x=10, y=450)
+label6 = Label(tk, text=str('Auslastung: None'), font=('Arial', 20))
+label6.place(x=10, y=550)
 Button1 = Button(tk, text='Start', command=palindrom, font=('Arial', 20))
 Button1.place(x=10, y=400)
 tk.update()
