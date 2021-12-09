@@ -1,7 +1,7 @@
 import time
 from tkinter import *
 import psutil
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
 import numpy as np
 
 def palindrom():
@@ -12,7 +12,7 @@ def palindrom():
     liste = []
     auslastung = []
     zeitliste = []
-    for x in range(1000):
+    for x in range(200):
         Zahl = rootZahl
         versuche = 0
         label.config(text='Zahl wird berechnet: '+str(rootZahl))
@@ -64,10 +64,10 @@ def palindrom():
         listbox.insert(END, temp)
     listbox.config(yscrollcommand = scrollbar.set)
     scrollbar.config(command = listbox.yview)
-    xpoints = np.array(zeitliste)
-    ypoints = np.array(auslastung)
-    plt.plot(xpoints, ypoints)
-    plt.show()
+#    xpoints = np.array(zeitliste)
+#    ypoints = np.array(auslastung)
+#    plt.plot(xpoints, ypoints)
+#    plt.show()
 
 
 
