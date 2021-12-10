@@ -12,7 +12,9 @@ def palindrom():
     liste = []
     auslastung = []
     zeitliste = []
-    for x in range(200):
+    Speedtime = []
+    
+    for x in range(1000):
         Zahl = rootZahl
         versuche = 0
         label.config(text='Zahl wird berechnet: '+str(rootZahl))
@@ -26,10 +28,10 @@ def palindrom():
 
     #        print(rootZahl, zahl_rev, Zahl, versuche)
             if int(zahl_rev) == int(Zahl):
-                print('Zahl: ' + str(rootZahl) + '. Versuche: ' + str(versuche))
+#                print('Zahl: ' + str(rootZahl) + '. Versuche: ' + str(versuche))
                 break
-            if versuche > 10000:
-                print('Timeout. len of trys to high.')
+            if versuche > 20000:
+#                print('Timeout. len of trys to high.')
                 Fehler.append(rootZahl)
                 stri = ''
                 for x in Fehler:
@@ -39,8 +41,14 @@ def palindrom():
             Zahl = Zahl + int(str(Zahl)[::-1])
             label3.config(text='Hochgerechnete Zahl: '+str(Zahl)[:70])
             label5.config(text='Größe der berechneten Zahl: '+str(len(str(Zahl))))
-            print('Auslastung: '+str(psutil.cpu_percent()))
-            auslastung.append(psutil.cpu_percent())
+    
+ #           print('Auslastung: '+str(psutil.cpu_percent()))
+            Speedtime.append(time.time())
+            for x in range(len(Speedtime)):
+                if (time.time()-Speedtime[x]) > 1:
+                    Speedtime.delete(x)
+                    
+            label5.config(text='Rechenprozesse pro Sekunde: '+) 
             zeitliste.append(str(float(time.time())-float(e)))
             tk.update()
 
@@ -49,8 +57,8 @@ def palindrom():
         liste.append(temp)
         
         rootZahl += 1
-    print('-------Auswertung-------')
-    print('Zahlen: Versuche zu hoch', Fehler)
+#    print('-------Auswertung-------')
+#    print('Zahlen: Versuche zu hoch', Fehler)
 #    print(str(float(e-time.time)))
     root = Tk()
     listbox = Listbox(root)
@@ -83,7 +91,7 @@ label4 = Label(tk, text=str('Timeout bei: None'))
 label4.place(x=10, y=350)
 label5 = Label(tk, text=str('Größe der berechneten Zahl: None'), font=('Arial', 20))
 label5.place(x=10, y=450)
-label6 = Label(tk, text=str('Auslastung: None'), font=('Arial', 20))
+label6 = Label(tk, text=str('Rechenprozesse pro Sekunde: '), font=('Arial', 20))
 label6.place(x=10, y=550)
 Button1 = Button(tk, text='Start', command=palindrom, font=('Arial', 20))
 Button1.place(x=10, y=400)
